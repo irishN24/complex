@@ -1,0 +1,58 @@
+#include <iostream>
+
+using namespace std;
+struct complex {
+    double re, im;
+    void complexInput();
+    void complexPrint();
+    bool istqual(complex);
+    double mod();
+    complex sum(complex);
+    complex sub(complex);
+    complex mul(complex);
+    complex div(complex);
+};
+
+int main()
+{
+    complex c1, c2, c3;
+
+    c1.complexInput();
+    c2.complexInput();
+    /*c3 = c1.sum(c2);
+    c3 = c1.sub(c2);*/
+    c3 = c1.mul(c2);
+    c3.complexPrint();
+
+}
+void complex::complexInput(){
+    cout << "re = ";
+    cin >> re;
+    cout << "im = ";
+    cin >> im;
+}
+complex complex::sum(complex x){
+    complex res;
+    res.re = re + x.re;
+    res.im = im + x.im;
+    return res;
+}
+void complex::complexPrint(){
+    cout << re << "+" << im << "i";
+}
+complex complex::sub(complex x){
+    complex res;
+    res.re = re - x.re;
+    res.im = im - x.im;
+    return res;
+}
+complex complex::mul(complex x){
+    complex res;
+    res.re = re * x.re;
+    res.im = im * x.im;
+    return res;
+}
+complex complex::div(complex x){
+    
+}
+
