@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 struct complex {
@@ -16,14 +17,27 @@ struct complex {
 int main()
 {
     complex c1, c2, c3;
-
+    ;
     c1.complexInput();
     c2.complexInput();
-    /*c3 = c1.sum(c2);
-    c3 = c1.sub(c2);*/
+    c3 = c1.sum(c2);
+    c3.complexPrint();
+    c3 = c1.sub(c2);
+    c3.complexPrint();
     c3 = c1.mul(c2);
     c3.complexPrint();
+    c3 = c1.div(c2);
+    c3.complexPrint();
 
+    if (c1.istqual(c2)){
+        cout << "c1 and c2 are equal"<< "\n";
+    }
+    else{
+        cout << "c1 and c2 are not equal"<< "\n";
+    }
+
+    cout << "module c1:"<< c1.mod() << "\n";
+    cout << "module c2:" << c2.mod() << "\n";
 }
 void complex::complexInput(){
     cout << "re = ";
@@ -31,14 +45,14 @@ void complex::complexInput(){
     cout << "im = ";
     cin >> im;
 }
+void complex::complexPrint(){
+    cout << re << "+(" << im << "i)" << "\n";
+}
 complex complex::sum(complex x){
     complex res;
     res.re = re + x.re;
     res.im = im + x.im;
     return res;
-}
-void complex::complexPrint(){
-    cout << re << "+" << im << "i";
 }
 complex complex::sub(complex x){
     complex res;
@@ -48,11 +62,23 @@ complex complex::sub(complex x){
 }
 complex complex::mul(complex x){
     complex res;
-    res.re = re * x.re;
-    res.im = im * x.im;
+    res.re = ((re* x.re) - (im * x.im));
+    res.im = ((re* x.im) + (im * x.re));
     return res;
 }
 complex complex::div(complex x){
-    
+    complex res;
+    double sopr = (x.re*x.re) + (x.im * x.im); //sopr &&&&
+    res.re = (re * x.re + im * x.im)/sopr;
+    res.im = (im * x.re - re * x.im)/ sopr;
+    return res;
+}
+double complex::mod(){
+    double res;
+    res = sqrt((re*re) + (im * im));
+    return res;
+}
+bool complex::istqual(complex x){
+    return (re == x.re) && (im = x.im);
 }
 
