@@ -1,0 +1,61 @@
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+class complex {
+    double re, im;
+public:
+    complex(double Re = 0, double Im = 0);
+    double getRe(); // ++
+    void setRe(double); // присвоить значение
+    double getIm(); // ++
+    void setIm(double); //
+    bool operator == (const complex &);
+    bool operator != (const complex &);
+    double mod(); // возвращает модуль комплексного числа ++
+    operator char *(); // преобразует комплексное число в строку
+    complex operator - (); // возвращает комплексно сопряженное число
+    complex operator + (const complex &);
+    complex operator += (const complex &);
+    complex operator - (const complex &);
+    complex operator -= (const complex &);
+    complex operator * (const complex &);
+    complex operator *= (const complex &);
+    complex operator / (const complex &);
+    complex operator /= (const complex &);
+    friend istream& operator >> (istream&, complex &);
+    friend ostream& operator << (ostream&, const complex &);
+    void complexInput(); //++
+    void complexPrint(); //++
+};
+int main()
+{
+
+    return 0;
+}
+
+double complex::getRe(){
+    double res;
+    res = re;
+    return res;
+}
+double complex::getIm(){
+    double res;
+    res = im;
+    return res;
+}
+double complex::mod(){
+    double res;
+    res = sqrt((re*re) + (im * im));
+    return res;
+}
+void complex::complexInput(){
+    cout << "re = ";
+    cin >> re;
+    cout << "im = ";
+    cin >> im;
+}
+void complex::complexPrint(){
+    cout << re << "+(" << im << "i)" << "\n";
+}
