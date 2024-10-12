@@ -1,6 +1,6 @@
 #include <iostream>
 #include <math.h>
-
+//для чего создавать setRe и setIm
 using namespace std;
 
 class complex {
