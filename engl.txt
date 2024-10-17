@@ -1,0 +1,8 @@
+Dear Mr. Green,
+I am concerned about your company's computer security. When I inspected your systems, I discovered hacker interference.
+This is dangerous because they can steal your data and even change it.
+To keep your systems safe, I recommend running an antivirus on all computers and encrypting all data using an encryptor 
+This will help, because it will limit attackers' access to data.
+Let's meet to discuss this further.
+Daniel Corwin
+SharpAlert Computing Systems
