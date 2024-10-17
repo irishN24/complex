@@ -1,28 +1,70 @@
 #include <iostream>
 #include <math.h>
-//для чего создавать setRe и setIm
+
 using namespace std;
 
 class complex {
     double re, im;
 public:
-    complex(double Re = 0, double Im = 0);
-    double getRe(); // ++
-    void setRe(double); // присвоить значение
-    double getIm(); // ++
-    void setIm(double); //
-    bool operator == (const complex &);
-    bool operator != (const complex &);
-    double mod(); // возвращает модуль комплексного числа ++
-    operator char *(); // преобразует комплексное число в строку
-    complex operator - (); // возвращает комплексно сопряженное число
-    complex operator + (const complex &);
+    complex(double Re = 0, double Im = 0) : re(Re), im(Im){}
+    double getRe(){ //++
+        return re;
+    }// ++
+    void setRe(double Re) { //++
+        re = Re;
+    }
+    double getIm(){ //++
+        return im;
+    }// ++
+    void setIm(double Im){ //++
+        im = Im;
+    }
+    bool operator == (const complex &c2){ //сравнение (равенство) ++
+        return (re == c2.re) && (im == c2.im);
+    }
+    bool operator != (const complex &c2){ // сравнение (неравенство) ++
+        return (re != c2.re) || (im != c2.im);
+    }
+    double mod(); //++
+    operator char *(){// преобразует комплексное число в строку
+
+    }
+    complex operator - (){ // возвращает комплексно сопряженное число++
+        if (im > 0){
+            return complex(re, -im);
+        }
+        else{
+            return complex(re, im*(-1));
+        }
+    }
+    complex operator + (const complex &c2){ //сложение ++
+        complex c3;
+        c3.re = re + c2.re;
+        c3.im = im + c2.im;
+        return c3;
+    }
     complex operator += (const complex &);
-    complex operator - (const complex &);
+    complex operator - (const complex &c2){ //вычитание++
+        complex c4;
+        c4.re = re - c2.re;
+        c4.im = im - c2.im;
+        return c4;
+    }
     complex operator -= (const complex &);
-    complex operator * (const complex &);
+    complex operator * (const complex &c2){ //умножение ++
+        complex c5;
+        c5.re = ((re* c5.re) - (im * c5.im));
+        c5.im = ((re* c5.im) + (im * c5.re));
+        return c5;
+    }
     complex operator *= (const complex &);
-    complex operator / (const complex &);
+    complex operator / (const complex &c2){ //деление ++
+        complex res;
+        double sopr = (c2.re*c2.re) + (c2.im * c2.im);
+        res.re = (re * c2.re + im * c2.im)/sopr;
+        res.im = (im * c2.re - re * c2.im)/ sopr;
+        return res;
+    }
     complex operator /= (const complex &);
     friend istream& operator >> (istream&, complex &);
     friend ostream& operator << (ostream&, const complex &);
@@ -31,21 +73,15 @@ public:
 };
 int main()
 {
-
+    complex c1(1.0, 4.0);
+    c1.complexPrint();
+    c1.setIm(5.0);
+    c1.setRe(3.0);
+    c1.complexPrint();
     return 0;
 }
 
-double complex::getRe(){
-    double res;
-    res = re;
-    return res;
-}
-double complex::getIm(){
-    double res;
-    res = im;
-    return res;
-}
-double complex::mod(){
+double complex::mod(){// возвращает модуль комплексного числа ++
     double res;
     res = sqrt((re*re) + (im * im));
     return res;
