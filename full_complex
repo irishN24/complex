@@ -1,5 +1,7 @@
 #include <iostream>
 #include <math.h>
+//#include <sstream>
+//#include <string>
 
 using namespace std;
 
@@ -26,8 +28,10 @@ public:
         return (re != c2.re) || (im != c2.im);
     }
     double mod(); //++
-    operator char *(){// преобразует комплексное число в строку
-
+    operator char *(){// преобразует комплексное число в строку ++
+        static char buff[100];
+        snprintf(buff, sizeof(buff), "%g + (%g)", re, im);
+        return buff;
     }
     complex operator - (){ // возвращает комплексно сопряженное число++
         if (im > 0){
@@ -43,21 +47,33 @@ public:
         c3.im = im + c2.im;
         return c3;
     }
-    complex operator += (const complex &);
+    complex operator += (const complex &c2){
+        re += c2.re;
+        im += c2.im;
+        return *this;
+    }
     complex operator - (const complex &c2){ //вычитание++
         complex c4;
         c4.re = re - c2.re;
         c4.im = im - c2.im;
         return c4;
     }
-    complex operator -= (const complex &);
+    complex operator -= (const complex &c2){
+        re -= c2.re;
+        im -= c2.im;
+        return *this;
+    }
     complex operator * (const complex &c2){ //умножение ++
         complex c5;
         c5.re = ((re* c5.re) - (im * c5.im));
         c5.im = ((re* c5.im) + (im * c5.re));
         return c5;
     }
-    complex operator *= (const complex &);
+    complex operator *= (const complex &c2){
+        re = ((re* c2.re) - (im * c2.im));
+        im = ((re* c2.im) + (im * c2.re));
+        return *this;
+    }
     complex operator / (const complex &c2){ //деление ++
         complex res;
         double sopr = (c2.re*c2.re) + (c2.im * c2.im);
@@ -65,9 +81,20 @@ public:
         res.im = (im * c2.re - re * c2.im)/ sopr;
         return res;
     }
-    complex operator /= (const complex &);
-    friend istream& operator >> (istream&, complex &);
-    friend ostream& operator << (ostream&, const complex &);
+    complex operator /= (const complex &c2){
+        double sopr = (c2.re*c2.re) + (c2.im * c2.im);
+        re = (re * c2.re + im * c2.im)/sopr;
+        im = (im * c2.re - re * c2.im)/ sopr;
+        return *this;
+    }
+    friend istream& operator >> (istream &is, complex &c){
+        is >> c.re >> c.im;
+        return is;
+    }
+    friend ostream& operator << (ostream &os, const complex &c){
+        os << "(" << c.re << "," << c.im << ")";
+        return os;
+    }
     void complexInput(); //++
     void complexPrint(); //++
 };
@@ -75,9 +102,32 @@ int main()
 {
     complex c1(1.0, 4.0);
     c1.complexPrint();
-    c1.setIm(5.0);
-    c1.setRe(3.0);
-    c1.complexPrint();
+    //c1.setIm(5.0);
+    //c1.setRe(3.0);
+    //c1.complexPrint();
+    complex c2;
+    c2.complexInput();
+    c2.complexPrint();
+    if (c1 == c2){
+        cout << "Complex numbers are equal\n";
+    }
+    else if(c1 != c2){
+        cout << "Complex numbers are not equal\n";
+    }
+    double m = c1.mod();
+    cout << "Modulus of a complex number 1: "<< m;
+    complex c3;
+    c3 = -c1;
+    c3.complexPrint();
+    complex c4;
+    c4 = c1 + c2;
+    c4.complexPrint();
+    c4 += c3;
+    c4.complexPrint();
+    complex c5;
+    c5 = c1 - c2;
+    c5.complexPrint();
+
     return 0;
 }
 
@@ -95,3 +145,4 @@ void complex::complexInput(){
 void complex::complexPrint(){
     cout << re << "+(" << im << "i)" << "\n";
 }
+Modulus of a complex number
