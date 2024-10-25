@@ -1,7 +1,7 @@
 #include <iostream>
 #include <math.h>
-//#include <sstream>
-//#include <string>
+#include <sstream>
+#include <string>
 
 using namespace std;
 
@@ -65,8 +65,8 @@ public:
     }
     complex operator * (const complex& c2) { //умножение ++
         complex c5;
-        c5.re = ((re * c5.re) - (im * c5.im));
-        c5.im = ((re * c5.im) + (im * c5.re));
+        c5.re = ((re * c2.re) - (im * c2.im));
+        c5.im = ((re * c2.im) + (im * c2.re));
         return c5;
     }
     complex operator *= (const complex& c2) {
@@ -76,15 +76,15 @@ public:
     }
     complex operator / (const complex& c2) { //деление ++
         complex res;
-        double sopr = (c2.re * c2.re) + (c2.im * c2.im);
-        res.re = (re * c2.re + im * c2.im) / sopr;
-        res.im = (im * c2.re - re * c2.im) / sopr;
+        double sopra = (c2.re * c2.re) + (c2.im * c2.im);
+        res.re = (re * c2.re + im * c2.im) / sopra;
+        res.im = (im * c2.re - re * c2.im) / sopra;
         return res;
     }
     complex operator /= (const complex& c2) {
-        double sopr = (c2.re * c2.re) + (c2.im * c2.im);
-        re = (re * c2.re + im * c2.im) / sopr;
-        im = (im * c2.re - re * c2.im) / sopr;
+        double sopra = (c2.re * c2.re) + (c2.im * c2.im);
+        re = (re * c2.re + im * c2.im) / sopra;
+        im = (im * c2.re - re * c2.im) / sopra;
         return *this;
     }
     friend istream& operator >> (istream& is, complex& c) {
@@ -100,42 +100,35 @@ public:
 };
 int main()
 {
-    complex c1(1.0, 4.0);
-    c1.complexPrint();
-    complex c2;
-    c2.complexInput(); // (3,5)
-    c2.complexPrint();
-    if (c1 == c2) {
-        cout << "Complex numbers are equal\n";
-    }
-    else if (c1 != c2) {
-        cout << "Complex numbers are not equal\n"; //++
-    }
-    double m = c1.mod(); //4.123105....
-    cout << "Modulus of a complex number 1: " << m;
-    complex c3;
-    c3 = -c1; 
-    cout << "c3 = " << c3 << "\n"; // (1, -4)
-    complex c4;
-    c4 = c1 + c2;
-    cout << "c1 + c2 = " << c4 << "\n"; //(4,9)
-    c4 += c3;
-    cout << "c4 = " << c4 << "\n"; //(5,5)
-    complex c5;
-    c5 = c1 - c2;
-    cout << "c1 - c2= " << c5 << "\n"; //(-2,-1)
-    c5 -= c2;
-    cout << "c5 = " << c5 << "\n"; //(-5,-6)
-    complex c6;
-    c6 = c1 * c2;
-    cout << "c1 * c2 = " << c6 << "\n"; //(-17,23)
-    c6 *= c5;
-    cout << "c6 = " << c6 << "\n";//(223, -53)
-    complex c7;
-    c7 = c6 / c2;
-    cout << "c1 / c2= " << c7 << "\n";
-    c7 /= c2;
-    cout << "c7 = " << c7 << "\n";
+    complex c1, c2(-7, 6);
+    cout << "Enter first complex: ";
+    c1.complexInput();
+    cout << "c1 = " << c1 << "\nc2 = " << c2;
+    if (c1 == c2)
+        cout << "\nComplex numbers are equal\n";
+    if (c1 != c2)
+        cout << "\nComplex numbers are not equal\n";
+    c1.setRe(2);
+    c2.setIm(5);
+    cout << "c1 re change:" << c1.getRe() << "\nc2 im change:" << c2.getIm();
+    cout << "\nModulus of a complex 1: " << c1.mod() << "\n";
+    cout << "c1 + c2 = " << c1 + c2 << "\n";
+    cout << "c1 - c2 = " << c1 - c2 << "\n";
+    cout << "c1 * c2 = " << c1 * c2 << "\n";
+    cout << "c1 / c2 = " << c1 / c2 << "\n";
+    cout << "-c1 = " << -c1 << "\n";
+    complex c3(6, 8);
+    c3 += c1;
+    c3.complexPrint();
+    complex c4(12, 7);
+    c4 -= c2;
+    c4.complexPrint();
+    complex c5(2, 6);
+    c5 *= c1;
+    c5.complexPrint();
+    complex c6(21, 18);
+    c6 /= c2;
+    cout << c6;
     return 0;
 }
 
