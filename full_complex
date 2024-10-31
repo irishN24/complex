@@ -9,31 +9,31 @@ class complex {
     double re, im;
 public:
     complex(double Re = 0, double Im = 0) : re(Re), im(Im) {}
-    double getRe() { //++
+    double getRe() {
         return re;
     }
-    void setRe(double Re) { //++
-        re = Re;
-    }
-    double getIm() { //++
+    double getIm() {
         return im;
     }
-    void setIm(double Im) { //++
+    void setRe(double Re) {
+        re = Re;
+    }
+    void setIm(double Im) {
         im = Im;
     }
-    bool operator == (const complex& c2) { //сравнение (равенство) ++
+    bool operator == (const complex& c2) {
         return (re == c2.re) && (im == c2.im);
     }
-    bool operator != (const complex& c2) { // сравнение (неравенство) ++
+    bool operator != (const complex& c2) {
         return (re != c2.re) || (im != c2.im);
     }
-    double mod(); //++
-    operator char* () {// преобразует комплексное число в строку ++
+    double mod();
+    operator char* () {
         static char buff[100];
         snprintf(buff, sizeof(buff), "%g + (%g)i", re, im);
         return buff;
     }
-    complex operator - () { // возвращает комплексно сопряженное число++
+    complex operator - () {
         return complex(re, -im);
     }
     complex operator += (const complex& c2) {
@@ -61,17 +61,17 @@ public:
         im = Newim;
         return *this;
     }
-    const complex operator + (const complex& c2) const { //сложение ++
+    const complex operator + (const complex& c2) const {
         return complex(*this) += c2;
     }
-    const complex operator - (const complex& c2) { //вычитание++
+    const complex operator - (const complex& c2) {
         return complex(*this) -= c2;
     }
-    const complex operator * (const complex& c2) const{ //умножение ++
+    const complex operator * (const complex& c2) const{
         return complex((re * c2.re) - (im * c2.im),(re * c2.im) + (im * c2.re));
     }
     const complex operator / (const complex& c2) {
-        double sopra = (c2.re * c2.re) + (c2.im * c2.im);//деление ++
+        double sopra = (c2.re * c2.re) + (c2.im * c2.im);
         return complex((re * c2.re + im * c2.im) / sopra, (im * c2.re - re * c2.im) / sopra);
     }
     friend istream& operator >> (istream& is, complex& c) {
@@ -82,44 +82,45 @@ public:
         os << "(" << c.re << "," << c.im << ")";
         return os;
     }
-    void complexInput(); //++
-    void complexPrint(); //++
+    void complexInput();
+    void complexPrint();
 };
 int main()
 {
     complex c1, c2(-7, 6);
     cout << "Enter first complex: ";
-    c1.complexInput(); //(3,6)
+    c1.complexInput();
     cout << "c1 = " << c1 << "\nc2 = " << c2;
     if (c1 == c2)
         cout << "\nComplex numbers are equal\n";
     if (c1 != c2)
-        cout << "\nComplex numbers are not equal\n"; //++
-    c1.setRe(2); //(2.6)
-    c2.setIm(5); //(-7,5)
-    cout << "c1 re change:" << c1.getRe() << "\nc2 im change:" << c2.getIm();
-    cout << "\nModulus of a complex 1: " << c1.mod() << "\n"; // 6.324555..
-    cout << "c1 + c2 = " << c1 + c2 << "\n"; //(-5. 11)
-    cout << "c1 - c2 = " << c1 - c2 << "\n"; // (9.1)
-    cout << "c1 * c2 = " << c1 * c2 << "\n"; //(-44.-32)
-    cout << "c1 / c2 = " << c1 / c2 << "\n"; // 0.21621-0.70270i
-    cout << "-c1 = " << -c1 << "\n"; //(2.-6)
+        cout << "\nComplex numbers are not equal\n";
+    c1.setRe(2);
+    c2.setIm(5);
+    cout << "c1 re change:" << c1.getRe() << "\nc2 im change:" << c2.getIm() << "\n";
+    cout << "c1 = " << c1 << "\nc2 = " << c2;
+    cout << "\nModulus of a complex 1: " << c1.mod() << "\n";
+    cout << "c1 + c2 = " << c1 + c2 << "\n";
+    cout << "c1 - c2 = " << c1 - c2 << "\n";
+    cout << "c1 * c2 = " << c1 * c2 << "\n";
+    cout << "c1 / c2 = " << c1 / c2 << "\n";
+    cout << "-c1 = " << -c1 << "\n";
     complex c3(6, 8);
     c3 += c1;
-    c3.complexPrint(); //(8+14i)
+    c3.complexPrint();
     complex c4(12, 7);
     c4 -= c2;
-    c4.complexPrint(); //(19 + 2i)
+    c4.complexPrint();
     complex c5(15, 3);
     c5 *= c2;
-    c5.complexPrint(); // -120+54i
+    c5.complexPrint();
     complex c6(21, 18);
     c6 /= c2;
-    cout << (char*)c6; // -0.77027-3.12162i
+    cout << (char*)c6;
     return 0;
 }
 
-double complex::mod() {// возвращает модуль комплексного числа ++
+double complex::mod() {
     double res;
     res = sqrt((re * re) + (im * im));
     return res;
